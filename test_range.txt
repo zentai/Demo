@@ -1,0 +1,8 @@
+1. Create a web page using HTML/CSS/JavaScript.
+2. Implement a shell utility using bash.
+3. Create a simple TCP server program that's capable of:
+
+- Initializing from an XML configuration file.
+- Accepting multiple incoming clients concurrently.
+- Processing client commands received over TCP.
+- Writing data to Postgres if necessary.
