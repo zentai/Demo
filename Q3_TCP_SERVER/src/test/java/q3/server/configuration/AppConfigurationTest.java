@@ -15,4 +15,14 @@ public class AppConfigurationTest{
 		assertEquals("pg@localhost", config.getSqlDbname());
 		assertEquals("dict", config.getSqlTblname());		
 	}
+	
+	@Test
+	public void Test_AppConfiguration_in_testenv() throws ConfigurationException{
+		AppConfiguration config = new AppConfiguration("../resource/test_config.xml");
+		assertEquals("18000", config.getServerPort());
+		assertEquals("127.0.0.1", config.getSqlHost());
+		assertEquals("5432", config.getSqlPort());
+		assertEquals("test_pg@localhost", config.getSqlDbname());
+		assertEquals("test_dict", config.getSqlTblname());		
+	}	
 }
