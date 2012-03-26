@@ -28,12 +28,12 @@
             $(this).html(message);
         });
         
-        /*
-            use jquery filter to inject css class "odd" "even"
-        */
+        
+        // use jquery filter to inject css class "odd" "even"
         $("tr:odd").attr("class", "odd_color odd_size");
         $("tr:even").attr("class", "even_color even_size");
         
+        // register button click event
         $("#btn_SwapFontSize").click(SwapFontSize);
         $("#btn_SwapBackground").click(SwapBackground);
     });
