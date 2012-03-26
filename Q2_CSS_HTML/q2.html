@@ -27,9 +27,62 @@
             var message = (colIndex + 1) + ", "+ (rowIndex + 1); // index should start from 1,1 
             $(this).html(message);
         });
+        
+        /*
+            use jquery filter to inject css class "odd" "even"
+        */
+        $("tr:odd").attr("class", "odd_color odd_size");
+        $("tr:even").attr("class", "even_color even_size");
+        
+        $("#btn_SwapFontSize").click(SwapFontSize);
+        $("#btn_SwapBackground").click(SwapBackground);
     });
+
+    /*
+        a help function to swap style
+    */
+    function _swap_size(style){
+        if (style == "odd_size"){
+            return "even_size";
+        }else if (style == "even_size"){
+            return "odd_size";
+        }else if (style == "odd_color"){
+            return "even_color";
+        }else{
+            return "odd_color";
+        }
+    }
+    
+    /*
+        swap odd/even font size
+    */
+    function SwapFontSize(){
+        odd_style = $("tr:odd").attr("class").split(" ");
+        odd_style[1] = _swap_size(odd_style[1])
+        $("tr:odd").attr("class", odd_style.join(" "));
+        
+        even_style = $("tr:even").attr("class").split(" ");
+        even_style[1] = _swap_size(even_style[1])
+        $("tr:even").attr("class", even_style.join(" "));
+    }
+    
+    /*
+        swap odd/even font background-color
+    */
+    function SwapBackground(){
+        odd_style = $("tr:odd").attr("class").split(" ");
+        odd_style[0] = _swap_size(odd_style[0])
+        $("tr:odd").attr("class", odd_style.join(" "));
+        
+        even_style = $("tr:even").attr("class").split(" ");
+        even_style[0] = _swap_size(even_style[0])
+        $("tr:even").attr("class", even_style.join(" "));
+    }
+    
 </script>
-  <table border="1" id="my_table">
+  <input type=submit value="SwapBackground" id="btn_SwapBackground"/>
+  <input type=submit value="SwapFontSize" id="btn_SwapFontSize"/>
+  <table border="0" id="my_table">
     <tr>
         <td></td>
         <td></td>

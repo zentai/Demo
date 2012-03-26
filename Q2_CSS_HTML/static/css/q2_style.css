@@ -1,0 +1,21 @@
+/*
+    Q2_style css
+*/
+
+
+/* TABLE */
+.odd_color{
+    background-color: #00ff00;
+}
+
+.odd_size{
+    font-size: 10pt;
+}
+
+.even_color{
+    background-color: #ff0000;
+}
+
+.even_size{
+    font-size: 16pt;
+}
