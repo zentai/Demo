@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+    <meta name="generator" content="HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf8">
+    <title>Q2 HTML/CSS/JS test</title>
+    <meta name="Generator" content="EditPlus">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <link type="text/css" href="static/css/q2_style.css" rel="Stylesheet">
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+</head>    
+<body>
+
+<script type="text/javascript">
+    /*
+        a flexible design is render index by js, 
+        the index will auto recalc if we change table structure.
+    */
+    $(document).ready(function() {
+        $("#my_table tr td").each(function() {
+            var colIndex = $(this).parent().children().index($(this));
+            var rowIndex = $(this).parent().parent().children().index($(this).parent());
+            var message = (colIndex + 1) + ", "+ (rowIndex + 1); // index should start from 1,1 
+            $(this).html(message);
+        });
+    });
+</script>
+  <table border="1" id="my_table">
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>        
+    </tr>    
+  <tbody>
+</table>
+</body>
+</html>

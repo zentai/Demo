@@ -1,0 +1,10 @@
+
+2. Create a web page with html/css/javascript that
+    - displays an 8x8 table
+    - displays in each table cell its coordinate (row, column) in the table, with the top-left cell being (1,1) and bottom-right (8,8)
+    - displays odd and even rows with two different background colors
+    - displays cell coordinates in odd and even columns in two different font sizes
+    - has two button in the page SwapBackground and SwapFontSize. When SwapBackground is clicked, background colors for odd and even row are swapped. When SwapFontSize is clicked, font sizes for odd and even columns are swapped.
+    
+    
+    
