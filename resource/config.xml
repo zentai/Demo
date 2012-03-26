@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <!-- port we listen on -->
+    <serverport>18000</serverport>
+    
+    <!-- postgres settings -->
+    <postgres>
+        <host>127.0.0.1</host>
+        <port>5432</port>
+        
+        <!-- database name -->
+        <dbname>pg@localhost</dbname>
+        
+        <!-- table name -->
+        <tblname>dict</tblname>
+    </postgres>
+</settings>
