@@ -38,7 +38,7 @@ class MessageProcessorTask implements TaskInf {
     public MessageProcessorTask(byte[] bytes, SocketChannel channel) throws ConfigurationException, PostgresAgentInitialException {
         _bytes = bytes;
         _channel = channel;
-        _postgresAgent = new PostgresAgent(new AppConfiguration("../resource/config.xml"));
+        _postgresAgent = PostgresAgent.getInstance(new AppConfiguration("../resource/config.xml"));
     }
 
 
@@ -54,7 +54,9 @@ class MessageProcessorTask implements TaskInf {
     		logger.error("Invalid Protocol. connection close.");
     		response = "Invalid Protocol. connection close.";
     		try {
+    			 _channel.write(ByteBuffer.wrap(response.getBytes()));
 				_channel.close();
+				ConnectionAcceptor.current_connection -= 1;
 			} catch (IOException e) {
 				logger.error("SocketChannel close exception "+ e);
 				return;
@@ -78,6 +80,13 @@ class MessageProcessorTask implements TaskInf {
             _channel.write(ByteBuffer.wrap(response.getBytes()));
         }
         catch (IOException io) {
+        	try {
+				_channel.close();
+			} catch (IOException e) {
+				logger.error("channel close error");
+				e.printStackTrace();
+			}
+        	ConnectionAcceptor.current_connection -= 1;
             throw new TaskFailedException("I/O exception while processing the message: " + new String(_bytes), io);
         }
     }

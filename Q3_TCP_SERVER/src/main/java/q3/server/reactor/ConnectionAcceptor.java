@@ -2,6 +2,7 @@ package q3.server.reactor;
 
 import java.io.IOException;
 import java.net.SocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -19,9 +20,11 @@ import q3.server.reactor.task.ThreadPool;
  */
 public class ConnectionAcceptor {
 	static final Logger logger = LoggerFactory.getLogger(ConnectionAcceptor.class);
+	public static int current_connection = 0; 
     protected Selector _selector;
     protected ServerSocketChannel _ssChannel;
     protected ThreadPool _pool;
+	private int _max_client_limit = 50;
 
     /**
      * Creates a new ConnectionAcceptor
@@ -29,10 +32,11 @@ public class ConnectionAcceptor {
      * @param ssChannel the ServerSocketChannel which can accept new connections
      * @param pool the thread pool, which is needed by the new ConnectionReaders
      */
-    public ConnectionAcceptor(Selector selector, ServerSocketChannel ssChannel, ThreadPool pool) {
+    public ConnectionAcceptor(Selector selector, ServerSocketChannel ssChannel, ThreadPool pool, int max_client_limit) {
         _selector = selector;
         _ssChannel = ssChannel;
         _pool = pool;
+        _max_client_limit = max_client_limit;
     }
 
     /**
@@ -45,6 +49,18 @@ public class ConnectionAcceptor {
      * @throws IOException in case of an IOException during the acceptance of a new connection
      */
     public void accept() throws IOException {
+    	if(current_connection > _max_client_limit){
+    		logger.error("Server Hit Max Client limit. connection rejected.");
+    		SocketChannel sChannel = _ssChannel.accept();
+    		String response = "Server Hit Max Client limit. connection rejected.";
+    		try {
+    			sChannel.write(ByteBuffer.wrap(response.getBytes()));
+    			sChannel.close();
+			} catch (IOException e) {
+				logger.error("SocketChannel close exception "+ e);
+				return;
+			}
+    	}
         // Get a new channel for the connection request
         SocketChannel sChannel = _ssChannel.accept();
 
@@ -54,6 +70,7 @@ public class ConnectionAcceptor {
             logger.info("Accepting connection from " + address);
             sChannel.configureBlocking(false);
             sChannel.register(_selector, SelectionKey.OP_READ, new ConnectionReader(sChannel, _pool));
+            current_connection += 1;
         }
     }
 }

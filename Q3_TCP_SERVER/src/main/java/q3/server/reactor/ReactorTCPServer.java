@@ -23,6 +23,7 @@ public class ReactorTCPServer extends Thread {
     protected int _poolSize;
     protected ThreadPool _pool;
     protected volatile boolean _shouldRun = true;
+	private int _max_client_limit = 50;
 
     /**
      * Creates a new ReactorTCPServer
@@ -30,9 +31,10 @@ public class ReactorTCPServer extends Thread {
      * @param port the port to bind the ReactorTCPServer to
      * @throws IOException if some I/O problems arise during connection
      */
-    public ReactorTCPServer(int poolSize, int port) throws IOException {
+    public ReactorTCPServer(int poolSize, int port, int max_client_limit) throws IOException {
         _port = port;
         _poolSize = poolSize;
+        _max_client_limit = max_client_limit;
     }
 
     /**
@@ -64,7 +66,7 @@ public class ReactorTCPServer extends Thread {
             ssChannel.socket().bind(new InetSocketAddress(_port));
 
             Selector selector = Selector.open();
-            ssChannel.register(selector, SelectionKey.OP_ACCEPT, new ConnectionAcceptor(selector, ssChannel, _pool));
+            ssChannel.register(selector, SelectionKey.OP_ACCEPT, new ConnectionAcceptor(selector, ssChannel, _pool, _max_client_limit));
 
             while (_shouldRun) {
                 selector.select();
@@ -129,15 +131,10 @@ public class ReactorTCPServer extends Thread {
     }
 
     public static void main(String args[]) {
-//    	if (args.length!=2) {
-//    		System.err.println("Usage: java Reactor <thread pool size> <port>");
-//    		System.exit(1);
-//    	}
-    	
     	int THREAD_LIMIT = 10;
     	int PORT = 18000;
         try {
-            ReactorTCPServer reactor = new ReactorTCPServer(THREAD_LIMIT, PORT);
+            ReactorTCPServer reactor = new ReactorTCPServer(THREAD_LIMIT, PORT, 50);
             reactor.start();
             System.out.println("ReactorTCPServer is ready on port " + reactor.getPort());
             reactor.join();
