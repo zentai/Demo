@@ -67,7 +67,7 @@ public class PostgresAgent {
 			throw e;
 		}
 
-		System.out.println("PostgreSQL JDBC Driver Registered!");
+		log.info("PostgreSQL JDBC Driver Registered!");
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection("jdbc:postgresql://"
