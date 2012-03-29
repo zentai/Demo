@@ -33,7 +33,15 @@ public class PostgresAgent {
 	private String sqlTblname;
 	private String username;
 	private String password;
-
+	private static PostgresAgent instance = null;
+	
+	public static PostgresAgent getInstance(AppConfiguration config) throws PostgresAgentInitialException{
+		if (instance == null){
+			instance = new PostgresAgent(config);
+		}
+		return instance;
+	}
+	
 	/**
 	 * PostgresAgent is a ORMapping object to handle databases operation.
 	 * 
@@ -42,7 +50,7 @@ public class PostgresAgent {
 	 * @throws PostgresAgentInitialException
 	 *             - when appConfig is null
 	 */
-	public PostgresAgent(AppConfiguration appConfig)
+	private PostgresAgent(AppConfiguration appConfig)
 			throws PostgresAgentInitialException {
 		if (null == appConfig) {
 			log.error("AppConfiguration is not be Null");
@@ -119,7 +127,7 @@ public class PostgresAgent {
 			e.printStackTrace();
 		}
 	}
-	public void update(String term, String definition) throws ClassNotFoundException, SQLException {
+	public synchronized void update(String term, String definition) throws ClassNotFoundException, SQLException {
 		if (null == term){
 			log.error("term is primary key, should not be null");
 			return;
