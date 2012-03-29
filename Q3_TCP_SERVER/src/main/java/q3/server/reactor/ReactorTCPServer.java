@@ -11,6 +11,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import q3.server.configuration.AppConfiguration;
 import q3.server.db.PostgresAgentInitialException;
 import q3.server.reactor.task.ThreadPool;
 
@@ -130,9 +131,10 @@ public class ReactorTCPServer extends Thread {
         _pool.stopPool();
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ConfigurationException {
+    	AppConfiguration appConfig = new AppConfiguration("../resource/config.xml");
     	int THREAD_LIMIT = 10;
-    	int PORT = 18000;
+    	int PORT = Integer.parseInt(appConfig.getServerPort());
         try {
             ReactorTCPServer reactor = new ReactorTCPServer(THREAD_LIMIT, PORT, 50);
             reactor.start();
